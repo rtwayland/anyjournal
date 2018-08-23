@@ -19,7 +19,7 @@ const defaultEditorOptions = {
   theme: "default",
   lineWrapping: true,
   keyMap: "default",
-  lineNumbers: false
+  lineNumbers: true
 };
 class Editor extends Component {
   state = {
@@ -44,8 +44,7 @@ class Editor extends Component {
   handleKeymapChange = keyMap => {
     this.setState({ keyMap }, () => {
       const keymapOptions = {
-        keyMap,
-        lineNumbers: keyMap !== "default"
+        keyMap
       };
       const options = { ...this.state.options, ...keymapOptions };
       this.setState({ options });
