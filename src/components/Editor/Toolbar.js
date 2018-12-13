@@ -1,65 +1,73 @@
-import React from "react";
-import { Menu, Dropdown, Radio } from "semantic-ui-react";
+import React from 'react';
+import { Menu, Dropdown, Radio } from 'semantic-ui-react';
 
 const themeOptions = [
   {
-    text: "light",
-    value: "light"
+    text: 'light',
+    value: 'light'
   },
   {
-    text: "dark",
-    value: "dark"
+    text: 'dark',
+    value: 'dark'
   }
 ];
 const keymapOptions = [
   {
-    text: "default",
-    value: "default"
+    text: 'default',
+    value: 'default'
   },
   {
-    text: "vim",
-    value: "vim"
+    text: 'vim',
+    value: 'vim'
   },
   {
-    text: "emacs",
-    value: "emacs"
+    text: 'emacs',
+    value: 'emacs'
   }
 ];
 const modeOptions = [
   {
-    text: "default",
-    value: "markdown"
+    text: 'default',
+    value: 'markdown'
   },
   {
-    text: "javascript",
-    value: "javascript"
+    text: 'javascript',
+    value: 'javascript'
   },
   {
-    text: "css",
-    value: "css"
+    text: 'css',
+    value: 'css'
   },
   {
-    text: "html",
-    value: "htmlmixed"
+    text: 'html',
+    value: 'htmlmixed'
   },
   {
-    text: "React",
-    value: "jsx"
+    text: 'React',
+    value: 'jsx'
   },
   {
-    text: "Vue",
-    value: "vue"
+    text: 'Vue',
+    value: 'vue'
   }
 ];
-const Toolbar = props => (
+const Toolbar = ({
+  theme,
+  keyMap,
+  mode,
+  handleThemeChange,
+  handleKeymapChange,
+  handleModeChange
+}) => (
   <Menu>
     <Menu.Item>
       <Dropdown
         placeholder="Theme"
         selection
         options={themeOptions}
+        value={theme}
         onChange={(e, r) => {
-          props.handleThemeChange(r.value);
+          handleThemeChange(r.value);
         }}
       />
     </Menu.Item>
@@ -68,8 +76,9 @@ const Toolbar = props => (
         placeholder="Keymap"
         selection
         options={keymapOptions}
+        value={keyMap}
         onChange={(e, r) => {
-          props.handleKeymapChange(r.value);
+          handleKeymapChange(r.value);
         }}
       />
     </Menu.Item>
@@ -78,8 +87,9 @@ const Toolbar = props => (
         placeholder="Mode"
         selection
         options={modeOptions}
+        value={mode}
         onChange={(e, r) => {
-          props.handleModeChange(r.value);
+          handleModeChange(r.value);
         }}
       />
     </Menu.Item>
