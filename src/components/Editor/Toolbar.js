@@ -1,5 +1,6 @@
-import React from 'react';
-import { Menu, Dropdown, Radio } from 'semantic-ui-react';
+/**@jsx jsx */
+import { jsx, css } from '@emotion/core';
+import { Menu, Dropdown } from 'semantic-ui-react';
 
 const themeOptions = [
   {
@@ -51,6 +52,15 @@ const modeOptions = [
     value: 'vue'
   }
 ];
+const menuItemTitle = css({
+  fontSize: 15,
+  paddingBottom: 5
+});
+const vertical = css({
+  display: 'flex',
+  flexDirection: 'column'
+});
+
 const Toolbar = ({
   theme,
   keyMap,
@@ -59,8 +69,9 @@ const Toolbar = ({
   handleKeymapChange,
   handleModeChange
 }) => (
-  <Menu>
-    <Menu.Item>
+  <Menu inverted={theme === 'dark'} attached="top">
+    <Menu.Item name="Theme" css={vertical}>
+      <span css={menuItemTitle}>Theme</span>
       <Dropdown
         placeholder="Theme"
         selection
@@ -71,7 +82,8 @@ const Toolbar = ({
         }}
       />
     </Menu.Item>
-    <Menu.Item>
+    <Menu.Item css={vertical}>
+      <span css={menuItemTitle}>Keymap</span>
       <Dropdown
         placeholder="Keymap"
         selection
@@ -82,7 +94,8 @@ const Toolbar = ({
         }}
       />
     </Menu.Item>
-    <Menu.Item>
+    <Menu.Item css={vertical}>
+      <span css={menuItemTitle}>Mode</span>
       <Dropdown
         placeholder="Mode"
         selection

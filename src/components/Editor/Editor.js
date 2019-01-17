@@ -10,7 +10,9 @@ import 'codemirror/mode/css/css';
 import 'codemirror/mode/jsx/jsx';
 import 'codemirror/mode/vue/vue';
 import 'codemirror/theme/lesser-dark.css';
+import * as uuid from 'uuid/v4';
 import Toolbar from './Toolbar';
+import BottomToolbar from './BottomToolbar';
 
 const defaultOptions = {
   placeholder: 'Journal here...',
@@ -27,15 +29,20 @@ function Editor() {
     keyMap: defaultKeymap,
     mode: defaultMode
   } = defaultOptions;
-  const [entry, setEntry] = useState('Hi my name is `Raleigh Wayland`');
+  const initialTheme = defaultTheme === 'default' ? 'light' : 'dark';
+  // State
+  const [text, setText] = useState('');
   const [keyMap, setKeyMap] = useState(defaultKeymap);
-  const [theme, setTheme] = useState(
-    defaultTheme === 'default' ? 'light' : 'dark'
-  );
+  const [theme, setTheme] = useState(initialTheme);
   const [mode, setMode] = useState(defaultMode);
   const [options, setOptions] = useState({ ...defaultOptions });
+  const [selectedTags, setSelectedTags] = useState([]);
 
-  const handleChange = (e, d, value) => setEntry(value);
+  // Functions
+  const handleTextChange = (e, d, value) => setText(value);
+
+  const handleTagChange = (e, { value }) => setSelectedTags([...value]);
+
   const handleThemeChange = theme => {
     setTheme(theme);
     const newOptions = {
@@ -44,6 +51,7 @@ function Editor() {
     };
     setOptions(newOptions);
   };
+
   const handleKeymapChange = keyMap => {
     setKeyMap(keyMap);
     const keymapOptions = {
@@ -52,10 +60,24 @@ function Editor() {
     const newOptions = { ...options, ...keymapOptions };
     setOptions(newOptions);
   };
+
   const handleModeChange = mode => {
     setMode(mode);
     const newOptions = { ...options, mode };
     setOptions(newOptions);
+  };
+
+  const onSave = () => {
+    if (text) {
+      const time = new Date();
+      const entry = {
+        creationDate: time,
+        text: text,
+        tags: selectedTags,
+        id: uuid()
+      };
+      console.log(entry);
+    }
   };
   return (
     <div>
@@ -68,9 +90,14 @@ function Editor() {
         handleModeChange={handleModeChange}
       />
       <CodeMirror
-        onBeforeChange={handleChange}
-        value={entry}
+        onBeforeChange={handleTextChange}
+        value={text}
         options={options}
+      />
+      <BottomToolbar
+        theme={theme}
+        handleTagChange={handleTagChange}
+        onSave={onSave}
       />
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Editor from './components/Editor/Editor'
+import Editor from './Editor/Editor'
 
 class App extends Component {
   state = {
